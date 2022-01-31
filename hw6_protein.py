@@ -312,7 +312,16 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-    return
+    Colors=[]
+    BigDiffList=[]
+    for amino in range(len(biggestDiffs)):
+        BigDiffList.append(biggestDiffs[amino][0])
+    for label in labels:
+        if label in BigDiffList:
+            Colors.append("black")
+        else: Colors.append("white")
+    return Colors
+
 
 
 '''
@@ -364,4 +373,5 @@ if __name__ == "__main__":
     runFullProgram()
     #test.testMakeAminoAcidLabels()
     #test.testSetupChartData()
-    test.testSetupChartData()
+    #test.testSetupChartData()
+    test.testMakeEdgeList()
