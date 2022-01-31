@@ -34,7 +34,18 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    condonlist = []
+    stop_codons = ["UGA","UAG","UAA"]
+    for word in range(startIndex,len(dna),3):
+        dna = dna.replace("T","U")
+        condon = dna[word:word+3]
+        if condon not in stop_codons:
+            condonlist.append(condon)
+        else:
+            condonlist.append(condon)
+            break
+    return condonlist
+
 
 
 '''
@@ -197,7 +208,8 @@ if __name__ == "__main__":
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     runWeek1()
-    test.testReadFile()
+    #test.testReadFile()
+    test.testDnaToRna()
 
     ## Uncomment these for Week 2 ##
     """
