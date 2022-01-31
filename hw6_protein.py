@@ -127,7 +127,13 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: 2D list of strs
 '''
 def commonProteins(proteinList1, proteinList2):
-    return
+    commonprtein_list = []
+    for protein_1 in proteinList1:
+        for protein_2 in proteinList2:
+            if protein_1 == protein_2 and protein_1 not in commonprtein_list:
+                commonprtein_list.append(protein_1)
+    return commonprtein_list
+    
 
 
 '''
@@ -236,24 +242,25 @@ def runFullProgram():
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # runWeek1()
     #test.testReadFile()
     #test.testDnaToRna()
     #test.testMakeCodonDictionary()
     #test.testGenerateProtein()
     #test.testGenerateProtein()
-    test.testSynthesizeProteins()
+    #test.testSynthesizeProteins()
 
     ## Uncomment these for Week 2 ##
-    """
+
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     runWeek2()
-    """
+    test.testCommonProteins()
+    
 
     ## Uncomment these for Week 3 ##
     """
