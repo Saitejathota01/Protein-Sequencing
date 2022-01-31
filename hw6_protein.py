@@ -4,6 +4,7 @@ Name:
 Roll Number:
 """
 
+from asyncore import read
 import hw6_protein_tests as test
 
 project = "Protein" # don't edit this
@@ -17,7 +18,13 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+    file= open(filename,"r")
+    read=file.read()
+    str=""
+    for line in read.splitlines():
+        str= str+line
+    return str
+    
 
 
 '''
@@ -190,6 +197,7 @@ if __name__ == "__main__":
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     runWeek1()
+    test.testReadFile()
 
     ## Uncomment these for Week 2 ##
     """
