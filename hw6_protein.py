@@ -174,33 +174,32 @@ Parameters: 2D list of strs ; 2D list of strs ; float
 Returns: 2D list of values
 '''
 def findAminoAcidDifferences(proteinList1, proteinList2, cutoff):
-    aminofreqlist =[]
-    totalcount1 = len(combineProteins(proteinList1))
-    totalcount2 = len(combineProteins(proteinList2))
-    word = combineProteins(proteinList1) 
-    word1 = combineProteins(proteinList2)
-    count = aminoAcidDictionary(word)
-    count1 = aminoAcidDictionary(word1)
-    totalwrd = word + word1
-    totalwrd = list(set(totalwrd))
-    for term in totalwrd:
-        freq1 = 0 
-        freq2 = 0
-        if term != "Start" and term != "Stop":
-            if term not in aminofreqlist:
-                if term in word and term in word1:
-                    freq1 = count[term]/totalcount1
-                    freq2 = count1[term]/totalcount2
-                elif term in word and term not in word1:
-                    freq1 = count[term]/totalcount1
-                    freq2 = 0
-                elif term not in word and term in word1:
-                    freq1 = 0 
-                    freq2 = count1[term]/totalcount2
-                freqdiff = freq1-freq2
-                if freqdiff > cutoff or freqdiff < -cutoff:
-                    aminofreqlist.append([term,freq1,freq2])
-    return aminofreqlist
+    result=[]
+    proteins1=combineProteins(proteinList1)
+    proteins2=combineProteins(proteinList2)
+    aminoDict1=aminoAcidDictionary(proteins1)
+    aminoDict2=aminoAcidDictionary(proteins2)
+    count1=len(proteins1)
+    count2=len(proteins2)
+    for amino in aminoDict1:
+        if amino not in aminoDict2:
+            aminoDict2[amino]=0.0
+        aminoDict1[amino]/=count1           
+    for amino in aminoDict2:
+        if amino not in aminoDict1:
+            aminoDict1[amino]=0.0
+        aminoDict2[amino]/=count2  
+    for aminoAcid in aminoDict1:
+        if aminoAcid not in["Start","Stop"]:
+                freq1= aminoDict1[aminoAcid]
+                freq2= aminoDict2[aminoAcid]
+                if abs(freq1-freq2)> cutoff:
+                    temp=[]
+                    temp.append(aminoAcid)
+                    temp.append(freq1)
+                    temp.append(freq2)
+                    result.append(temp)
+    return result
     
 
 
@@ -211,7 +210,30 @@ Parameters: 2D list of strs ; 2D list of values
 Returns: None
 '''
 def displayTextResults(commonalities, differences):
-    return
+    common_proteins = []
+    diffamino_acids = []
+    str = ''
+    print("The following proteins occurred in both DNA Sequences:")
+    for common in commonalities:
+        if common not in common_proteins:
+            common_proteins.append(common[1:-1])
+    for aminoacids in common_proteins:
+        if len(aminoacids) > 0:
+            aminoacids = '-'.join(aminoacids)
+            diffamino_acids.append(aminoacids)
+    diffamino_acids.sort()
+    for l in diffamino_acids:
+        str += ' '+ l +"\n"
+    print(str)
+    print("The following amino acids occurred at very different rates in the two DNA sequences:")
+    for b in differences:
+        wrd = b[0]
+        seq1 = round(b[1]*100,2)
+        seq2 = round(b[2]*100,2)
+        print(f"{wrd}:{seq1}% in Seq1, {seq2}% in seq2")
+    return 
+
+
 
 
 def runWeek2():
@@ -300,13 +322,17 @@ if __name__ == "__main__":
     #test.testCommonProteins()
     #test.testCombineProteins()
     #test.testAminoAcidDictionary()
-    test.testFindAminoAcidDifferences()
+    #test.testFindAminoAcidDifferences()
+    
+
+
+    
     
 
     ## Uncomment these for Week 3 ##
-    """
-    print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
-    test.week3Tests()
-    print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
-    runFullProgram()
-    """
+    
+    # print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
+    # test.week3Tests()
+    # print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
+    # runFullProgram()
+    
